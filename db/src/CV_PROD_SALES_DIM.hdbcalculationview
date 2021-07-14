@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_PROD_SALES_DIM" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_PROD_SALES_DIM"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="PRODUCTDIM">
+    <resourceUri>PRODUCTDIM</resourceUri>
+  </DataSource>
+  <DataSource id="SUPPLIERDIM">
+    <resourceUri>SUPPLIERDIM</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PNAME"/>
+      <viewAttribute id="PPRICE"/>
+      <viewAttribute id="PCOMPANYNAME"/>
+      <viewAttribute id="SUPPID"/>
+      <viewAttribute id="SNAME"/>
+      <viewAttribute id="SREGION"/>
+      <viewAttribute id="SCITY"/>
+      <viewAttribute id="PID"/>
+      <viewAttribute hidden="true" id="JOIN$PSUPPID$SUPPID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="PRODUCTDIM">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PNAME" source="PNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPRICE" source="PPRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PCOMPANYNAME" source="PCOMPANYNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PID" source="PID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PSUPPID$SUPPID" source="PSUPPID"/>
+    </input>
+    <input node="SUPPLIERDIM">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPPID" source="SUPPID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SNAME" source="SNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SREGION" source="SREGION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SCITY" source="SCITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PSUPPID$SUPPID" source="SUPPID"/>
+    </input>
+    <joinAttribute name="JOIN$PSUPPID$SUPPID"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="PNAME" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PNAME"/>
+      <keyMapping columnObjectName="Join_1" columnName="PNAME"/>
+    </attribute>
+    <attribute id="PPRICE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PPRICE"/>
+      <keyMapping columnObjectName="Join_1" columnName="PPRICE"/>
+    </attribute>
+    <attribute id="PCOMPANYNAME" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PCOMPANYNAME"/>
+      <keyMapping columnObjectName="Join_1" columnName="PCOMPANYNAME"/>
+    </attribute>
+    <attribute id="SUPPID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPPID"/>
+      <keyMapping columnObjectName="Join_1" columnName="SUPPID"/>
+    </attribute>
+    <attribute id="SNAME" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SNAME"/>
+      <keyMapping columnObjectName="Join_1" columnName="SNAME"/>
+    </attribute>
+    <attribute id="SREGION" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SREGION"/>
+      <keyMapping columnObjectName="Join_1" columnName="SREGION"/>
+    </attribute>
+    <attribute id="SCITY" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SCITY"/>
+      <keyMapping columnObjectName="Join_1" columnName="SCITY"/>
+    </attribute>
+    <attribute id="PID" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PID"/>
+      <keyMapping columnObjectName="Join_1" columnName="PID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="207"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="PRODUCTDIM" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="55" y="26"/>
+      <rectangleSize width="179"/>
+    </shape>
+    <shape modelObjectName="SUPPLIERDIM" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="146"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

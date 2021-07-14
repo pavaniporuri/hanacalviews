@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_STAR_JOIN_DEMO" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_STAR_JOIN_DEMO"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="PRODUCTDIM">
+    <resourceUri>PRODUCTDIM</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="PID"/>
+      <viewAttribute id="PPRICE"/>
+    
+      <viewAttribute id="PSUPPID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="PRODUCTDIM"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="PID_1" hidden="true" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PID_1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PID"/>
+    </attribute>
+    <attribute id="PSUPPID" hidden="true" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PSUPPID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PSUPPID"/>
+    </attribute>
+    <attribute id="PSUPPID$local">
+      <descriptions defaultDescription="PSUPPID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PSUPPID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="PPRICE_1" order="2" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PPRICE_1"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PPRICE"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+  <sharedDimensions>
+    <logicalJoin associatedObjectUri="CV_PROD_SALES_DIM">
+      <attributes>
+        <attributeRef>PSUPPID$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>SUPPID</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_N" joinType="referential" joinOperator="Equal"/>
+      <associatedAttributeFeatures/>
+    </logicalJoin>
+  </sharedDimensions>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-13" y="246"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="StarJoinViewNodeInput" modelObjectType="repository">
+      <upperLeftCorner x="107" y="85"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+    <shape modelObjectName="CV_PROD_SALES_DIM" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="331" y="61"/>
+      <rectangleSize width="197.365234375"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

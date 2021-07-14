@@ -1,0 +1,12 @@
+PROCEDURE "PR_GET_PROD_DATA"( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+       Write your procedure logic
+   *************************************/
+
+   SELECT * FROM "Products";
+END

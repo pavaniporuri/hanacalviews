@@ -1,0 +1,11 @@
+PROCEDURE "PR_INSERT_ORDERDATA" (IN pid Integer,IN pname VARCHAR(20),IN pprice VARCHAR(20))
+LANGUAGE SQLSCRIPT
+SQL SECURITY INVOKER AS
+
+BEGIN
+
+update "Products" set  prodname = :pname, prodprice = :pprice  where PRODID = :pid;
+
+Select * from "Products";
+       
+END

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" id="CV_CUBE_DEMO" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_CUBE_DEMO"/>
+<localVariables>
+  <variable id="DiscountPercentage" parameter="true">
+    <descriptions defaultDescription="DiscountPercentage"/>
+    <variableProperties datatype="INTEGER" mandatory="false" defaultValue="">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="PRODUCTSALES">
+    <resourceUri>PRODUCTSALES</resourceUri>
+  </DataSource>
+  <DataSource id="productscv">
+    <resourceUri>productscv</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="CITY"/>
+      <viewAttribute id="PID" aggregationType="sum"/>
+      <viewAttribute id="PNAME"/>
+      <viewAttribute id="PPRICE" aggregationType="sum"/>
+      <viewAttribute id="ID" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="PRODUCTSALES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PID" source="PID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+    </input>
+    <input node="productscv">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PNAME" source="PNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PPRICE" source="PPRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PID" source="PID"/>
+    </input>
+    <joinAttribute name="PID"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="CITY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CITY"/>
+      <keyMapping columnObjectName="Join_1" columnName="CITY"/>
+    </attribute>
+    <attribute id="PID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PID"/>
+      <keyMapping columnObjectName="Join_1" columnName="PID"/>
+    </attribute>
+    <attribute id="PNAME" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PNAME"/>
+      <keyMapping columnObjectName="Join_1" columnName="PNAME"/>
+    </attribute>
+    <attribute id="ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="PPRICE" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PPRICE"/>
+      <measureMapping columnObjectName="Join_1" columnName="PPRICE"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures>
+    <measure id="Price_after_discount" order="6" aggregationType="sum" measureType="simple" datatype="DECIMAL" length="8" scale="2" expressionLanguage="SQL">
+      <formula>&quot;PPRICE&quot; - (&quot;PPRICE&quot; * 0.1)</formula>
+      </measure>
+  
+    <measure id="Discountwithparameter" order="7" aggregationType="sum" measureType="simple" datatype="DECIMAL" length="8" scale="2" expressionLanguage="SQL">
+      <descriptions defaultDescription="Discountwithparameter"/>
+      <formula>&quot;PPRICE&quot; - (&quot;PPRICE&quot; * ('$$DiscountPercentage$$'/100))</formula>
+    </measure>
+  </calculatedMeasures>
+  <restrictedMeasures>
+    <measure id="Price_by_city" order="8" aggregationType="sum" datatype="INTEGER" length="10" scale="0" baseMeasure="PPRICE">
+      <descriptions defaultDescription=""/>
+      <restriction logicalOperator="AND">
+        <filter xsi:type="Privilege:AttributeFilter" attributeName="CITY">
+          <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="BLR"/>
+        </filter>
+        <attributeName>CITY</attributeName>
+      </restriction>
+      <restriction logicalOperator="AND">
+        <filter xsi:type="Privilege:AttributeFilter" attributeName="CITY">
+          <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="MUM"/>
+        </filter>
+        <attributeName>CITY</attributeName>
+      </restriction>
+    </measure>
+  </restrictedMeasures>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="75" y="202"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="PRODUCTSALES" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="163"/>
+    </shape>
+    <shape modelObjectName="productscv" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="128"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

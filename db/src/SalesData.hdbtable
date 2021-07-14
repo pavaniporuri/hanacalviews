@@ -1,0 +1,7 @@
+column table SalesData(
+salesorder integer,
+prodid integer,
+prodname varchar(50),
+quantity integer,
+salesprice integer
+)

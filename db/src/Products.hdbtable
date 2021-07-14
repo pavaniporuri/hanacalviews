@@ -1,0 +1,7 @@
+COLUMN TABLE "Products" (
+
+prodid integer primary key,
+prodname varchar(50),
+prodprice INTEGER
+
+)

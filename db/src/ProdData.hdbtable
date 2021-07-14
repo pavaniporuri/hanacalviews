@@ -1,0 +1,6 @@
+COLUMN TABLE ProdData(
+
+prodid integer,
+prodname varchar(50),
+stock integer
+)

@@ -1,0 +1,6 @@
+column table productsales
+(
+    ID INTEGER,
+    PID INTEGER,
+    City VARCHAR(50)
+)

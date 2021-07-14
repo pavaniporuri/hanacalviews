@@ -1,0 +1,19 @@
+FUNCTION "TableFunctionExample"(IP_DISCOUNT DECIMAL(15,2))
+    RETURNS TABLE
+    (
+prodid integer,
+prodname varchar(50),
+prodprice INTEGER,
+discountedprice decimal(15,2)
+    )
+    LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER AS
+BEGIN
+    /*****************************
+        Write your function logic
+    ****************************/
+
+    RETURN
+    select prodid,prodname,prodprice,(prodprice-(prodprice*ip_discount)) 
+    as "DISCOUNTEDPRICE" FROM "Products";
+END;

@@ -1,0 +1,6 @@
+TRIGGER "Trigger_demo"
+AFTER INSERT ON "SALESDATA" REFERENCING NEW ROW as newrow 
+FOR EACH ROW
+BEGIN
+UPDATE "PRODDATA" set Stock = Stock - :newrow.Quantity where prodid = :newrow.prodid; 
+END

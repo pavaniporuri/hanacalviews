@@ -1,0 +1,6 @@
+column table "productscv"(
+
+PID integer,
+PName VARCHAR(50),
+PPrice integer
+)
